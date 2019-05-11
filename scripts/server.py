@@ -1,5 +1,6 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from io import BytesIO
+import model_retrieve as mr
 
 class GP(BaseHTTPRequestHandler):
 
@@ -8,7 +9,7 @@ class GP(BaseHTTPRequestHandler):
         self.end_headers()
 
         # getting result from file
-        file = open("data.txt", "r") 
+        file = open("files/data.txt", "r") 
         output_data = file.read()
         file.close()
 
@@ -29,11 +30,11 @@ class GP(BaseHTTPRequestHandler):
         print("RECEIVED: " + input_data[:100])
 
         # Doing some logic with given data
-        input_data = input_data.upper()
+        output_data = mr.returnAverageResult(input_data)
         
         # writing result to file       
-        file = open("data.txt","w") 
-        file.write(input_data) 
+        file = open("files/data.txt","w") 
+        file.write(output_data) 
         file.close() 
         
 
