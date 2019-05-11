@@ -1,0 +1,13 @@
+{
+  "name": "Text age classifier",
+  "version": "1.0",
+  "manifest_version": 2,
+  "description": "Tells if given text is appropriate to be read by children",
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+  "icons": { "16": "icon/icon16.png",
+             "48": "icon/icon48.png",
+             "128": "icon/icon128.png" },
+  "permissions": ["tabs", "<all_urls>"] 
+}

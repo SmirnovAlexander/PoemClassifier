@@ -1,7 +1,10 @@
-// @author Rob W <http://stackoverflow.com/users/938089/rob-w>
-// Demo: var serialized_html = DOMtoString(document);
-
-
+function wait(ms){
+   var start = new Date().getTime();
+   var end = start;
+   while(end < start + ms) {
+     end = new Date().getTime();
+  }
+}
 function DOMtoString(document_root) {
     var html = '',
         node = document_root.firstChild;
@@ -26,6 +29,7 @@ function DOMtoString(document_root) {
         }
         node = node.nextSibling;
     }
+	
     // Getting string containing russian words
 	var words = "";
 	var russianLetters = "ёйцукенгшщзхъфывапролджэячсмитьбю ЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЧСМИТЬБЮ";
@@ -35,7 +39,27 @@ function DOMtoString(document_root) {
 		}    
     }
     words = words.toLowerCase();
+    words = words.replace(/\s+/g,' ').trim();
+    
+	// Making a post request with our words
+	var x = new XMLHttpRequest();
+    x.open("POST", "http://localhost:9090");
+    x.send(words);
 
+	wait(500);
+		
+	// Making a get request for the result
+	var y = new XMLHttpRequest();   
+    y.open('GET', 'http://localhost:9090', false);
+    y.send();
+
+	// Handling errors
+    if (y.status != 200) {
+       words = y.status + ': ' + y.statusText;
+    } else {
+       words = y.responseText;
+    }   
+	
     return words;
 	
 }
