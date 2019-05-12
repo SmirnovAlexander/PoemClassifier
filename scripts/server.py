@@ -23,6 +23,7 @@ class GP(BaseHTTPRequestHandler):
         body = self.rfile.read(content_length)
         self.send_response(200)
         self.end_headers()
+
         response = BytesIO()
         response.write(body)
         self.wfile.write(response.getvalue())
