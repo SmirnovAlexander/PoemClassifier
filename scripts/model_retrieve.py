@@ -9,7 +9,7 @@ pickle_in = open("files/dict.pickle","rb")
 dictionary = pickle.load(pickle_in)
 
 # retrieving model
-model = keras.models.load_model('files/model.h5')
+model = keras.models.load_model('files/full_model.h5')
 
 # formatting string into data so we can process it throw neural net
 def stringOfWordsToTestList(tale):

@@ -1,2 +1,2 @@
-Average result of given text is 0.93
+Average result of given text is 0.67
 This page is OK to be read by children
