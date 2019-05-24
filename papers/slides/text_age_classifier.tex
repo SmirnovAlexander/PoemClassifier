@@ -21,8 +21,8 @@
 \tabulinesep=0.8mm
 
 \title{Классификация текстового контента}
-\author{Александр Смирнов и Феодор Жилкин}
-\date{17.05.2019г}
+\author{Александр Смирнов и Федор Жилкин}
+\date{24.05.2019г}
 
 \begin{document}
 
@@ -32,8 +32,6 @@
 		\frametitle{Введение}
 		\begin{figure}[h]
             \center{\includegraphics[scale=0.75]{images/children_statistics.jpg}}
-            \caption{Что интересует детей в интернете}
-            \label{fig:image}
         \end{figure}
 	\end{frame}
 	
@@ -41,26 +39,16 @@
 		\frametitle{Цели}
 			\begin{itemize}
 		 		\item Ограничить детей от взрослого текстового контента в интернете
-				\item Получение опыта
+				\item Получить опыт
     				\begin{itemize}
-    			    	\item Нейросети
-    			    	\item Майнинг датасета
+    			    	\item Бинарная классификация текста
+    			    	\item Сбор данных для обучения
     			    	\item Написание Python-библиотеки
     			    	\item Написание расширения для Chrome
     			    	\item Написание Python-сервера для приёма запросов
     		    	\end{itemize}
 			\end{itemize}
 	\end{frame}
-	
-	\begin{frame}
-		\frametitle{Задачи}
-			\begin{itemize}
-		 		\item Провести анализ возможных решений для классификации текста
-		 		\item Спарсить датасет с взрослыми и нормальными историями
-		 		\item Написать Python-сервер, использующий обученную модель для ответа на запросы от расширения
-		 		\item Сделать расширение для Chrome, анализирующее текстовый контент
-			\end{itemize}
-	\end{frame}	
 	
 	\begin{frame}
 		\frametitle{Сравнение с аналогами}
@@ -85,19 +73,28 @@
             \caption{Пример интерфейса схожей программы}
             \label{fig:image}
         \end{figure}
-	\end{frame}		
-
-	\begin{frame}
-		\frametitle{Результаты}
-		\begin{itemize}
-			\item Расширение для Chrome
-			\item Библиотека на pypi
-			\item Датасет на kaggle
-		\end{itemize}
-	\end{frame}
+	\end{frame}	
 	
 	\begin{frame}
-		\frametitle{Анализ подходов}
+		\frametitle{Задачи}
+			\begin{itemize}
+		 		\item Провести анализ возможных решений для классификации текста
+		 		\item Собрать рассказы для взрослых и обычные рассказы
+		 		\item Написать Python-сервер, использующий обученную модель для ответа на запросы от расширения
+		 		\item Сделать расширение для Chrome, обращающееся к серверу
+			\end{itemize}
+	\end{frame}	
+	
+	\begin{frame}
+		\frametitle{Сбор данных}
+		\begin{itemize}
+			\item Рассказы для взрослых берём с сайта ideer.ru
+			\item Рассказы для широкого круга читалей берём с множества сайтов по разным тематикам
+		\end{itemize}
+	\end{frame}		
+	
+	\begin{frame}
+		\frametitle{Анализ подходов к классификации текста}
 		\begin{itemize}
 			\item Rule-based
 			\item Machine Learning based
@@ -111,27 +108,27 @@
 			\item Accuracy – общая точность классификатора
 			\item Recall – отношение заблокированных взрослых сайтов к общему количеству взрослых сайтов (\% классифицированных взрослых сайтов)
 			\item Precision – отношение заблокированных взрослых сайтов к числу всех заблокиронных сайтов (точность блокировки)
-			\item F1 Score - среднее гармоническое между Precision и Recall, для учёта и того, и другого в одной величине
+			\item F1 Score – среднее гармоническое между Precision и Recall, для учёта и того, и другого в одной величине
 		\end{itemize}
 	\end{frame}
 	
 	\begin{frame}
 		\frametitle{Сравнение}
     		\begin{itemize}
-    			\item Random model – случайная выборка блокировать/ не блокировать
-    			\item Rule-based model – блокируем по списку непотребных слов
+    			\item Random model – случайный выбор блокировать/не блокировать
+    			\item Rule-based model – блокировка по списку непотребных слов
     			\item Classifier – 3-х слойная обычная сеть
     			\item Upgraded Classifier – Classifier, из словаря которой были исключены самые частые слова и добавлена ненормативная лексика
     		\end{itemize}
             \begin{table}[]
-                \begin{tabular}{|l|c|c|c|c|}
-                \hline
-                                    & Accuracy & Recall & Precision & F1 Score \\ \hline
-                Random model        & 0.51     & 0.58   & 0.58      & 0.58     \\ \hline
-                Rule-based model    & 0.41     & 0.03   & 1.0       & 0.06     \\ \hline
-                Classifier          & 0.88     & 0.93   & 0.87      & 0.90     \\ \hline
-                Upgraded Classifier & 0.90     & 0.92   & 0.91      & 0.91     \\ \hline
-                \end{tabular}
+            \begin{tabular}{|l|l|c|c|c|}
+            \hline
+                                         & F1 Score      & Accuracy & Recall & Precision \\ \hline
+            Random model                 & 0.58          & 0.51     & 0.58   & 0.58      \\ \hline
+            Rule-based model             & 0.06          & 0.41     & 0.03   & 1.0       \\ \hline
+            Classifier                   & 0.90          & 0.88     & 0.93   & 0.87      \\ \hline
+            \textbf{Upgraded Classifier} & \textbf{0.91} & 0.90     & 0.92   & 0.91      \\ \hline
+            \end{tabular}
             \end{table}
 
 	\end{frame}		
@@ -148,62 +145,23 @@
 	\end{frame}		
 	
 	\begin{frame}
-		\frametitle{Расширение для Chrome (1)}
-		\begin{figure}[h]
-            \center{\includegraphics[scale=0.4]{images/bad_content_example.jpg}}
-            \caption{Блокировка контента}
-            \label{fig:image}
+		\frametitle{Взаимодействие расширения и сервера}
+	    	\begin{figure}[h]
+            \center{\includegraphics[scale=0.13]{images/uml.png}}
         \end{figure}
-	\end{frame}	
-	
-	\begin{frame}
-		\frametitle{Расширение для Chrome (2)}
-		\begin{figure}[h]
-            \center{\includegraphics[scale=0.37]{images/good_content_example.png}}
-            \caption{Допуск до контента}
-            \label{fig:image}
-        \end{figure}
-	\end{frame}	
-	
-	\begin{frame}
-		\frametitle{Библиотека на pypi}
-		\begin{figure}[h]
-            \center{\includegraphics[scale=0.6]{images/library.png}}
-            \caption{Библиотека}
-            \label{fig:image}
-        \end{figure}
-	\end{frame}	
-	
-	\begin{frame}
-		\frametitle{Датасет на kaggle}
-		\begin{figure}[h]
-            \center{\includegraphics[scale=0.25]{images/kaggle.png}}
-            \caption{Датасет}
-            \label{fig:image}
-        \end{figure}
-	\end{frame}
-	
-	\begin{frame}
-		\frametitle{Как это всё работает}
-		\begin{figure}[h]
-            \center{\includegraphics[scale=0.2]{images/scheme.png}}
-            \caption{Схема проекта}
-            \label{fig:image}
-        \end{figure}
-	\end{frame}	
+	\end{frame}		
 	
 	\begin{frame}
 		\frametitle{Итоги}
 		\begin{itemize}
-			\item Феодор
+			\item Федор
 			    \begin{itemize}
-			    	\item Парсинг
-			    	\item Python-библиотека
-			    	\item Датасет
+			    	\item Сбор данных
+			    	\item Библиотека
 		        \end{itemize}
 			\item Александр
 			    \begin{itemize}
-			    	\item Нейросеть
+			    	\item Классификация текста
 			    	\item Сервер
 			    	\item Расширение
 		        \end{itemize}
@@ -213,10 +171,10 @@
 	\begin{frame}
 		\frametitle{Результаты}
 		\begin{itemize}
-			\item Проект – \url{https://github.com/SmirnovAlexander/PoemClassifier}
-			\item Парсер – \url{https://github.com/Feodoros/Scraping_Tales}
-			\item Библиотека – \url{https://pypi.org/project/TalesParse/}
-			\item Датасет – \url{https://www.kaggle.com/idoldev/adult-and-child-russian-tales-dataset-with-label}
+			\item Сделано расширение для Chrome – \url{https://github.com/SmirnovAlexander/PoemClassifier}
+			\item Сделана библиотека на pypi – \url{https://pypi.org/project/TalesParse/}
+			\item Собраны рассказы на kaggle – \url{https://www.kaggle.com/idoldev/adult-and-child-russian-tales-dataset-with-label}
+			\item Написан сборщик рассказов – \url{https://github.com/Feodoros/Scraping_Tales}
 		\end{itemize}
 	\end{frame}
 
